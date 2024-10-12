@@ -1,13 +1,20 @@
-const allData = async () => {
+const allData = async (isSeeMore) => {
   const res = await fetch(`https://openapi.programming-hero.com/api/ai/tools`);
   const data = await res.json();
-  display(data.data.tools);
+  display(data.data.tools, isSeeMore);
   console.log(data);
 };
 
-const display = (tools) => {
+const display = (tools, isSeeMore) => {
   const cardContainer = document.getElementById("card-container");
-  tools = tools.slice(0, 6);
+  const seeMore = document.getElementById("see-more");
+  if (!isSeeMore) {
+    tools = tools.slice(0, 6);
+  }
+  if (isSeeMore) {
+    seeMore.classList.add("hidden");
+  }
+
   tools.forEach((card1) => {
     const card = document.createElement("div");
     card.classList = "border p-5 rounded-2xl";
@@ -43,7 +50,6 @@ const display = (tools) => {
 };
 
 const seeMore = () => {
-  const seeMore = document.getElementById("see-more");
   allData(true);
 };
 allData();
